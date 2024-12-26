@@ -17,14 +17,21 @@
     "Scrollbars",
     "Segoe",
     "timeframe",
-    "tooltiptext"
+    "tooltiptext",
+    "tailwindcss",
+    "headlessui",
+    "heroicons",
+    "zustand",
+    "typename",
+    "typegen",
+    "chunkhash"
   ],
   "DockerRun.DisableDockerrc": true,
   "cloudcode.compute.sshInternalIp": true,
   "cloudcode.enableSkaffoldSkipUnreachableDirs": true,
   "cloudcode.enableMultiSkaffoldConfigsKey": true,
   "cloudcode.project": "credible-rex-443609-b1",
-  "cloudcode.updateChannel": "stable",
+  "cloudcode.updateChannel": "Default",
   "cloudcode.verboseLogging": true,
   "cloudcode.enableConfigLessExperience": true,
   "cloudcode.storage": {
@@ -34,7 +41,16 @@
   "diffEditor.codeLens": true,
   "cloudcode.duetAI.codeGenerationPaneViewEnabled": true,
   "cloudcode.duetAI.project": "credible-rex-443609-b1",
-  "cloudcode.duetAI.languages": ["yaml", "typescriptreact", "javascriptreact"],
+  "cloudcode.duetAI.languages": [
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "jsonc",
+    "yaml",
+    "css"
+  ],
   "sourcery.token": "user_RCvfZ_1_ZI7n6QhJ4emV7meagHZ0WXqFbYA5FskU79lFhRkdIzqnN0Lx8ys",
   "platformio-ide.useDevelopmentPIOCore": true,
   "platformio-ide.toolbar": [
@@ -92,30 +108,47 @@
     }
   },
   "github.copilot.enable": {
-    ".js": true,
+    "*": true,
     ".ts": true,
     ".tsx": true,
+    ".js": true,
+    ".jsx": true,
     ".css": true,
     ".json": true,
-    ".py": true,
-    ".env": true,
-    ".md": true,
-    ".gitignore": true,
-    ".git": true,
-    ".cjs": true,
-    ".firebaserc": true,
-    ".prettirrc": true,
+    ".jsonc": true,
     ".yaml": true,
-    ".gql": true,
-    ".dockerfile": true,
-    ".mjs": true,
-    "Typescript": true,
-    "markdown": true
+    ".md": true,
+    "typescript": true,
+    "typescriptreact": true,
+    "javascript": true,
+    "postcss": true,
+    "tailwindcss": true,
+    "remix": true,
+    "node": true,
+    "markdown": true,
+    ".env": true,
+    ".prettierrc": true,
+    ".eslintrc": true,
+    "vitest": true,
+    ".test.ts": true,
+    ".test.tsx": true,
+    ".d.ts": true,
+    ".config.ts": true,
+    ".config.js": true,
+    "plaintext": false,
+    "scminput": false
   },
+  "github.copilot.editor.enableAutoCompletions": true,
   "github.copilot.chat.followUps": "always",
   "github.copilot.chat.localeOverride": "en",
   "github.copilot.chat.scopeSelection": true,
   "github.copilot.chat.reviewSelection.instructions": [],
+  "github.copilot.chat.codeGeneration": {
+    "language": "typescript",
+    "framework": "react",
+    "includeImports": true,
+    "includeTypes": true
+  },
   "geminicodeassist.updateChannel": "Default",
   "codeium.aggressiveShutdown": true,
   "codeium.enableConfig": {
@@ -131,5 +164,121 @@
       "includeSchema": true
     },
     "enableRemoteMockServer": true
+  },
+  "flexpilot.enabled": true,
+  "flexpilot.ai.providers": {
+    "openai": {
+      "enabled": true,
+      "apiKey": "${env:OPENAI_API_KEY}"
+    },
+    "anthropic": {
+      "enabled": true,
+      "apiKey": "${env:ANTHROPIC_API_KEY}"
+    },
+    "gemini": {
+      "enabled": true,
+      "apiKey": "${env:GEMINI_API_KEY}",
+      "model": "${env:GEMINI_MODEL_NAME}",
+      "maxTokens": 8192,
+      "temperature": 0.7
+    }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.suggestionActions.enabled": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+
+  "tailwindCSS.validate": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "remix.port": 3000,
+  "remix.debugger.enabled": true,
+  "remix.routes.preferredExtension": "tsx",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "jest.runMode": "watch",
+  "jest.enableCodeLens": true,
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "bash",
+      "icon": "terminal-bash"
+    }
+  },
+  // Editor Enhancements
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.suggest.preview": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.snippetSuggestions": "top",
+
+  // TypeScript/JavaScript Intelligence
+  "typescript.suggest.autoImports": true,
+  "javascript.suggest.autoImports": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  // Testing Improvements
+  "testing.automaticallyOpenPeekView": "failureAnywhere",
+  "testing.followRunningTest": true,
+  "vitest.include": ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+
+  // Enhanced TypeScript Intelligence
+  "typescript.preferences.preferTypeOnlyImports": true,
+  "typescript.suggest.completeFunctionCalls": true,
+
+  // Improved React Development
+  "editor.linkedEditing": true,
+  "javascript.suggestionActions.enabled": true,
+
+  // Better Testing Experience
+  "jest.outputConfig": {
+    "revealOn": "run",
+    "revealWithFocus": "test-results"
+  },
+
+  // Enhanced Code Navigation
+  "workbench.editor.navigationScope": "editorGroup",
+  "search.sortOrder": "type",
+
+  // Tailwind Optimization
+  "css.validate": false,
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
+
+  // Performance Improvements
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/build/**": true
   }
 }
