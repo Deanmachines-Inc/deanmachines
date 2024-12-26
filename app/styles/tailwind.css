@@ -1,0 +1,259 @@
+/* app/styles/tailwind.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+    --primary: #ffffff;
+    --secondary: #d1d1d1;
+    --background: #000000;
+    --accent: #808080;
+    --shadow: rgba(255, 255, 255, 0.1);
+    --text-color-light: #ffffff;
+    --text-color-dark: #000000;
+    --glass-morphism: rgba(255, 255, 255, 0.05);
+    --border-radius: 8px;
+    --transition-duration: 0.3s;
+    --nav-height: 60px;
+    --mobile-nav-height: 50px;
+}
+
+/* Add glass morphism utility */
+.glassmorphism {
+    background: var(--glass-morphism);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Add responsive container */
+.container-responsive {
+    width: 100%;
+    max-width: 80rem; /* equivalent to Tailwind's 7xl */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+    .container-responsive {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container-responsive {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+/* Add advanced utilities */
+.card {
+    background: var(--glass-morphism);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.button {
+    background-color: var(--accent);
+    color: var(--text-color-light);
+    font-weight: 700;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 0.375rem;
+    outline: none;
+    box-shadow: 0 0 0 2px var(--accent);
+    transition: all 0.3s;
+}
+
+.button:hover {
+    background-color: var(--primary);
+    color: var(--text-color-dark);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.mt-8 {
+    margin-top: 2rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.space-x-4 {
+    gap: 1rem;
+}
+
+.list-none {
+    list-style: none;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+}
+
+.text-xl {
+    font-size: 1.25rem;
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+}
+
+.text-3xl {
+    font-size: 1.875rem;
+}
+
+.text-4xl {
+    font-size: 2.25rem;
+}
+
+.text-5xl {
+    font-size: 3rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.transition-colors {
+    transition: color 0.3s ease;
+}
+
+.transition-transform {
+    transition: transform 0.3s ease;
+}
+
+.hover\:bg-gray-700:hover {
+    background-color: rgb(55, 65, 81); /* This is the gray-700 color value */
+}
+
+.hover\:text-white:hover {
+    color: white;
+}
+
+.focus\:outline-none:focus {
+    outline: none;
+}
+
+.focus\:ring-2:focus {
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+.focus\:ring-accent:focus {
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+.dark\:bg-gray-800 {
+    background-color: rgb(31 41 55);
+}
+
+.dark\:text-white {
+    color: white;
+}
+
+/* Add dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #1a1a1a;
+        --text-color-light: #e0e0e0;
+        --text-color-dark: #f0f0f0;
+    }
+    body {
+        background-color: var(--background);
+        color: var(--text-color-light);
+    }
+}
+
+/* Add animation utilities */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.5s ease-in-out;
+}

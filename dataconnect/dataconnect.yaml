@@ -1,0 +1,12 @@
+specVersion: "v1beta"
+serviceId: "deanmachines"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "postgres"
+      cloudSql:
+        instanceId: "deanmachines"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]

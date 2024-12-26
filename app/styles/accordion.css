@@ -1,0 +1,70 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.accordion {
+    width: 100%;
+    border: 1px solid var(--accent);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-item {
+    border-bottom: 1px solid var(--accent);
+}
+
+.accordion-item:last-child {
+    border-bottom: none;
+}
+
+.accordion-header {
+    padding: 1rem;
+    background-color: var(--background);
+    color: var(--text-color-light);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.accordion-header:hover {
+    background-color: var(--accent);
+}
+
+.accordion-header::before {
+    content: "\25BC"; /* Unicode for down arrow */
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.accordion-header.active::before {
+    transform: rotate(180deg);
+    content: "\25B2"; /* Unicode for up arrow */
+}
+
+.accordion-content {
+    padding: 1rem;
+    background-color: var(--background);
+    color: var(--text-color-light);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 500px; /* Adjust as needed */
+}
+.accordion-content p {
+    margin: 0;
+}
+
+.accordion-icon {
+    color: var(--primary);
+    transition: transform 0.3s;
+}
+
+.accordion-icon.active {
+    transform: rotate(180deg);
+}

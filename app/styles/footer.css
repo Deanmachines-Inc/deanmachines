@@ -1,0 +1,60 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.footer {
+    background-color: var(--background);
+    color: var(--text-color-light);
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 1px solid var(--accent);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.footer a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: var(--secondary);
+}
+
+.footer .social-icons {
+    margin-top: 1rem;
+}
+
+.footer .social-icons a {
+    margin: 0 0.5rem;
+    color: var(--text-color-light);
+    transition: color 0.3s ease;
+}
+
+.footer .social-icons a:hover {
+    color: var(--accent);
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .footer {
+        background-color: var(--background);
+        color: var(--text-color-light);
+    }
+
+    .footer a {
+        color: var(--primary);
+    }
+
+    .footer a:hover {
+        color: var(--secondary);
+    }
+
+    .footer .social-icons a {
+        color: var(--text-color-light);
+    }
+
+    .footer .social-icons a:hover {
+        color: var(--accent);
+    }
+}

@@ -1,0 +1,34 @@
+/* app/tailwind.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Define custom CSS variables (consistent with global.css) */
+:root {
+    --primary: #64ffda;
+    --secondary: #f57c00;
+    --background: #282c34;
+    --accent: #a78bfa;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --text-color-light: #f0f0f0;
+    --text-color-dark: #333;
+    --glass-morphism: rgba(255, 255, 255, 0.15);
+    --border-radius: 8px;
+    --transition-duration: 0.3s;
+    --nav-height: 60px;
+    --mobile-nav-height: 50px;
+    --font-family: 'Roboto', sans-serif;
+    --code-font-family: 'Fira Code', monospace;
+    --animation-speed: 1.5s;
+    --gradient-start: #282c34;
+    --gradient-end: #333a43;
+    --gradient-angle: 135deg;
+    --dark-primary: #ffffff;
+    --dark-secondary: #d1d1d1;
+    --dark-background: #000000;
+    --dark-accent: #808080;
+    --dark-shadow: rgba(255, 255, 255, 0.1);
+    --dark-text-color-light: #ffffff;
+    --dark-text-color-dark: #000000;
+    --dark-glass-morphism: rgba(255, 255, 255, 0.05);
+}
