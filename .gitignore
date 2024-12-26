@@ -1,5 +1,13 @@
-/.cache
-/build
-.env
 node_modules
-
+.env
+.env.local
+.cache
+build
+dist
+public/build
+.DS_Store
+*.log
+coverage
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
