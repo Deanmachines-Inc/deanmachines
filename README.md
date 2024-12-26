@@ -82,80 +82,47 @@ npm start    # Run production server
 3. Copy `.env.example` to `.env`
 4. Start development server: `npm run dev`
 5. Configure Google Cloud credentials:
+
    ```bash
    export GOOGLE_CLOUD_PROJECT_ID="your-project-id"
    export GOOGLE_CLIENT_EMAIL="your-service-account-email"
    export GOOGLE_PRIVATE_KEY="your-private-key"
    # Plan
    ```
+
 6. Add Genkit AI integration section
 7. Update tech stack badges
 8. Add new setup instructions
 9. Update features section
 10. Add environment configuration details
 
-````markdown
-# Dean Machines: Autonomous FPV Drone Technology
+## Environment Configuration
 
-<img src="path/to/your/logo.png" alt="Dean Machines Logo" width="200" align="right">
+To configure the environment variables, create a `.env` file in the root directory of the project and add the following:
 
-**Revolutionizing flight through AI-powered autonomy.**
+```
+VITE_API_URL=your_api_url
+VITE_API_KEY=your_api_key
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/credentials.json
+```
 
-...existing description...
+Replace the placeholders with your actual API URL, API key, and the path to your Google Cloud service account credentials file. Ensure that the service account has the necessary permissions to access the Genkit AI services.
 
-## Project Highlights
+## Genkit AI Integration
 
-[![Remix](https://img.shields.io/badge/Remix-Blue?style=for-the-badge&logo=Remix&logoColor=white)](https://remix.run/)
-[![React](https://img.shields.io/badge/React-Blue?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-Blue?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Blue?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-Green?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en/)
-[![Genkit AI](https://img.shields.io/badge/Genkit-AI-Purple?style=for-the-badge&logo=google&logoColor=white)](https://cloud.google.com/vertex-ai)
+This project integrates with Genkit AI for advanced text processing capabilities. The integration is handled through a serverless function deployed to Google Cloud Functions. The client-side code interacts with this function via API calls. The serverless function handles the following:
 
-## Core Features & Technology
+- **Text Preprocessing:** Cleans and prepares the input text for analysis.
+- **Genkit AI Processing:** Sends the text to Genkit AI for processing.
+- **Postprocessing:** Formats the results from Genkit AI for use in the application.
+- **Error Handling:** Catches and handles errors gracefully, providing informative error messages to the user.
 
-...existing features...
+The integration is designed to be robust and efficient, ensuring reliable performance and a seamless user experience. The type-safe implementation ensures that data is handled correctly, reducing the risk of errors.
 
-### AI Integration with Genkit
+## Contributing
 
-The project leverages Google's Genkit AI for advanced text processing and analysis:
+We welcome contributions to this project! Please see the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
 
-- **Real-time Processing:** Server-side text processing with configurable parameters
-- **Type-safe Implementation:** Full TypeScript support with strict type checking
-- **Error Handling:** Comprehensive error boundaries and status-specific handling
-- **Dark Mode Support:** Consistent UI across light and dark themes
+## License
 
-## Tech Stack
-
-- React 18 with TypeScript
-- Remix for routing and server-side rendering
-- Tailwind CSS with Twin.macro for styling
-- ESLint + Prettier for code quality
-- Vitest for testing
-- Genkit AI for text processing
-- Google Cloud Platform integration
-
-## Setup Instructions
-
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Copy `.env.example` to `.env`
-4. Configure Google Cloud credentials:
-
-   ```bash
-   export GOOGLE_CLOUD_PROJECT_ID="your-project-id"
-   export GOOGLE_CLIENT_EMAIL="your-service-account-email"
-   export GOOGLE_PRIVATE_KEY="your-private-key"
-   ```
-````
-
-5. Start development server: `npm run dev`
-
-# Google Cloud & Genkit Configuration
-
-GOOGLE_CLOUD_PROJECT_ID=your-project-id
-GOOGLE_CLOUD_PROJECT_NAME=your-project-name
-GOOGLE_APPLICATION_CREDENTIALS=path/to/credentials.json
-COMPUTE_ZONE=your-compute-zone
-GENKIT_CONFIG_DIR=your-config-dir
-GENKIT_ENV=production
+This project is licensed under the [MIT License](LICENSE).
