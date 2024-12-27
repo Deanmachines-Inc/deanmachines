@@ -1,0 +1,94 @@
+Project Goal:
+
+To create a system that can quickly process information (like flight regulations, drone specifications, or sensor data) and generate relevant responses or actions for your FPV drone.
+
+RAG Approach:
+
+Embedding Generation: Convert text data (regulations, manuals, etc.) into numerical embeddings using a fast text embedding model.
+
+Vector Database (In-Memory for Speed): Store the embeddings in a simple, in-memory vector database for quick similarity searches. We'll not use a full-fledged database like Pinecone or ChromaDB to keep things lightweight and fast.
+
+Retrieval: When a query comes in (e.g., "What's the maximum altitude allowed?"), calculate its embedding and find the most similar embeddings in the vector database.
+
+Generation: Combine the retrieved context with the original query and use a fast generative model (like Gemini Pro) to produce the final response.
+
+Implementation (Part 1: Embedding Generation and In-Memory Vector Database)
+
+// embeddings.ts
+import { google, embedding } from '@genkit-ai/core';
+
+// Initialize the embedding model (use 'embedding-001' for speed)
+const embed = embedding(google({ model: 'embedding-001' }));
+
+// Sample data (replace with your actual drone data)
+const documents = [
+  "FPV drones must be flown within visual line of sight.",
+  "The maximum altitude for FPV drones is 400 feet AGL.",
+  "Do not fly FPV drones over people or moving vehicles.",
+  "Your drone's telemetry data indicates a low battery warning.",
+  "Your drone's accelerometer indicates a rapid descent.",
+  "Your drone's gyroscope indicates it is upside down.",
+  "Your drone's barometer indicates a rapid ascent.",
+  // ... more documents (regulations, manuals, sensor data descriptions)
+];
+
+// In-memory vector database (a simple array of objects)
+type DocVector = {
+  text: string;
+  vector: number[];
+};
+let vectorDB: DocVector[] = [];
+
+// Generate embeddings and populate the vector database
+async function generateEmbeddings() {
+  for (const doc of documents) {
+    const response = await embed.embed(doc);
+    vectorDB.push({ text: doc, vector: response.embedding });
+  }
+  console.log('Embeddings generated and stored in memory.');
+}
+
+// Function to calculate cosine similarity (fast for retrieval)
+function cosineSimilarity(vecA: number[], vecB: number[]): number {
+  const dotProduct = vecA.reduce((sum, a, i) => sum + a * vecB[i], 0);
+  const magnitudeA = Math.sqrt(vecA.reduce((sum, a) => sum + a * a, 0));
+  const magnitudeB = Math.sqrt(vecB.reduce((sum, b) => sum + b * b, 0));
+  return dotProduct / (magnitudeA * magnitudeB);
+}
+
+// Function to find the most similar documents
+async function findSimilarDocuments(query: string, topK: number = 3): Promise<DocVector[]> {
+  const queryEmbeddingResult = await embed.embed(query);
+  const queryEmbedding = queryEmbeddingResult.embedding;
+
+  const similarities = vectorDB.map((docVector) => ({
+    docVector,
+    similarity: cosineSimilarity(queryEmbedding, docVector.vector),
+  }));
+
+  similarities.sort((a, b) => b.similarity - a.similarity);
+
+  return similarities.slice(0, topK).map((item) => item.docVector);
+}
+
+// Initialize embeddings on startup
+generateEmbeddings();
+
+export { findSimilarDocuments };
+Use code with caution.
+TypeScript
+Explanation (Part 1):
+
+Embedding Model: We're using the embedding-001 model from Google Vertex AI for generating text embeddings. It's optimized for speed.
+
+Sample Data: The documents array holds example text data relevant to your FPV drone project. Replace this with your actual data (flight regulations, drone manuals, sensor data descriptions, etc.).
+
+In-Memory Vector Database: The vectorDB is a simple array of objects. Each object stores a document (text) and its corresponding embedding vector (vector).
+
+generateEmbeddings(): This function iterates through your documents, generates embeddings for each one using the embed model, and stores them in the vectorDB.
+
+cosineSimilarity(): This function calculates the cosine similarity between two vectors. It's a fast and common way to measure the similarity between embeddings.
+
+findSimilarDocuments(): This is your retrieval function. It takes a query, generates its embedding, calculates the similarity between the query embedding and all embeddings in the vectorDB, sorts the results, and returns the top topK most similar documents.
+
+
