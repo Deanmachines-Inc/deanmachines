@@ -34,6 +34,7 @@
     "composable-functions": "^4.5.0",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
+    "firebase": "^11.1.0",
     "firebase-admin": "^13.0.2",
     "firebase-functions": "^6.2.0",
     "genkit": "^0.9.12",
