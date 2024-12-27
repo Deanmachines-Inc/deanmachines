@@ -10,6 +10,7 @@ import {
   useNavigation,
 } from '@remix-run/react';
 import { GenkitService, type ProcessResponse } from '~/services/genkit.server';
+import { genkitClient, type GenerationConfig } from '~/lib/genkit/client';
 
 interface LoaderData {
   configured: boolean;
@@ -23,18 +24,11 @@ interface ActionData {
 
 export const loader: LoaderFunction = async () => {
   try {
-    const projectId = process.env.GOOGLE_CLOUD_PROJECT_ID;
-    if (!projectId) throw new Error('Project ID not configured');
-
-    GenkitService.initialize({
-      projectId,
-      credentials: {
-        client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY,
-      },
+    await genkitClient.initializeServer();
+    return json<LoaderData>({
+      configured: true,
+      projectId: genkitClient.getConfig().projectId,
     });
-
-    return json<LoaderData>({ configured: true, projectId });
   } catch (error) {
     return json<LoaderData>({ configured: false, projectId: null });
   }
@@ -43,17 +37,54 @@ export const loader: LoaderFunction = async () => {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const text = formData.get('text');
+  const temperature = formData.get('temperature');
+  const maxTokens = formData.get('maxTokens');
 
   if (!text || typeof text !== 'string') {
-    return json<ActionData>({ error: 'Text is required' }, { status: 400 });
+    return json({ error: 'Text is required' }, { status: 400 });
   }
 
   try {
-    const service = GenkitService.getInstance();
-    const response = await service.processText(text);
-    return json<ActionData>({ response });
+    const config: GenerationConfig = {
+      temperature: 0.7,
+      maxTokens: 1024, // Default value
+    };
+
+    if (temperature && typeof temperature === 'string') {
+      const parsedTemp = parseFloat(temperature);
+      if (!isNaN(parsedTemp) && parsedTemp >= 0 && parsedTemp <= 1) {
+        config.temperature = parsedTemp;
+      }
+    }
+
+    if (
+      maxTokens &&
+      (typeof maxTokens === 'string' || typeof maxTokens === 'number')
+    ) {
+      const parsedTokens = parseInt(String(maxTokens), 10);
+      if (!isNaN(parsedTokens) && parsedTokens > 0) {
+        config.maxTokens = parsedTokens;
+      }
+    }
+
+    const response = await genkitClient.generate(text, config);
+
+    if (!response.success) {
+      throw new Error(response.error?.message || 'Generation failed');
+    }
+
+    return json({
+      response: {
+        text: response.data!,
+        confidence: 1.0,
+        timestamp: new Date().toISOString(),
+      },
+    });
   } catch (error) {
-    return json<ActionData>({ error: 'Processing failed' }, { status: 500 });
+    return json(
+      { error: error instanceof Error ? error.message : 'Processing failed' },
+      { status: 500 }
+    );
   }
 };
 

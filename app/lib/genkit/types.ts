@@ -22,3 +22,16 @@ export interface FunctionDefinition {
   schema: z.ZodSchema<unknown>;
   handler: (args: unknown) => Promise<unknown>;
 }
+export interface GenerationConfig {
+  temperature?: number;
+
+  max_tokens?: number;
+
+  model?: string;
+
+  stop?: string[];
+
+  presence_penalty?: number;
+
+  frequency_penalty?: number;
+}

@@ -19,6 +19,7 @@
     "@eslint/config-array": "^0.19.1",
     "@eslint/object-schema": "^2.1.5",
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
+    "@genkit-ai/googleai": "^0.9.12",
     "@google-ai/generativelanguage": "^1.1.0",
     "@google-cloud/container": "^5.19.0",
     "@google-cloud/vertexai": "^0.1.0",

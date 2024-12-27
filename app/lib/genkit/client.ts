@@ -259,4 +259,4 @@ export class GenkitClient {
 // Create default client instance
 export const genkitClient = GenkitClient.getInstance();
 export { defaultModelSettings };
-export { config as genkitConfig };
+export { config as genkitConfig, type GenerationConfig };

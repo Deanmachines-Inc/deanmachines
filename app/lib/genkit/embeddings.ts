@@ -1,30 +1,53 @@
+import { VertexAI } from '@google-cloud/aiplatform';
 import { z } from 'zod';
-import { googleClient } from './genkit-conf';
-import { GenkitConfig } from './client';
-import { GenkitConfigError } from './client';
-import { GenkitModelSettings } from './settings';
 
+// Validation schema for configuration
+const configSchema = z.object({
+  projectId: z.string(),
+  location: z.string().default('us-central1'),
+  modelId: z.string().default('textembedding-gecko@001'),
+});
+
+interface EmbeddingResponse {
+  embeddings: number[];
+  error?: string;
+}
+
+/**
+ * Service for handling text embeddings using Vertex AI
+ */
 export class EmbeddingService {
-  private readonly config: Readonly<GenkitConfig>;
-  private readonly settings: Readonly<GenkitModelSettings>;
-  private readonly client;
+  private readonly vertexai: VertexAI;
+  private readonly modelId: string;
 
-  constructor(config: GenkitConfig, settings: GenkitModelSettings) {
-    this.config = Object.freeze({ ...config });
-    this.settings = Object.freeze({ ...settings });
-    this.client = googleClient.embeddings;
+  constructor(config: z.infer<typeof configSchema>) {
+    const validated = configSchema.parse(config);
+    this.vertexai = new VertexAI({
+      projectId: validated.projectId,
+      location: validated.location,
+    });
+    this.modelId = validated.modelId;
   }
 
-  async getEmbeddings(text: string): Promise<{ embeddings: number[] }> {
+  /**
+   * Get embeddings for input text
+   */
+  async getEmbeddings(text: string): Promise<EmbeddingResponse> {
     try {
-      const [response] = await this.client.getEmbeddings({
-        content: text,
-        model: 'textembedding-gecko',
+      const model = await this.vertexai.getModel(this.modelId);
+      const response = await model.predict({
+        instances: [{ content: text }],
       });
-      return response;
+
+      return {
+        embeddings: response[0],
+      };
     } catch (error) {
-      console.error('Error getting embeddings:', error);
-      throw new GenkitConfigError('Error getting embeddings');
+      console.error('Embedding error:', error);
+      return {
+        embeddings: [],
+        error: 'Failed to generate embeddings',
+      };
     }
   }
 }
