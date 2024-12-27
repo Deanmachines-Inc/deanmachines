@@ -1,4 +1,3 @@
-import { google } from '@genkit-ai/core';
 import { z } from 'zod';
 import type { GenerationConfig } from '@google-cloud/vertexai/build/src/types';
 import { LRUCache } from 'lru-cache';
@@ -12,6 +11,7 @@ import {
 import { EmbeddingService } from './embeddings';
 import { createStructuredPrompt, validateStructuredOutput } from './structured';
 import { functionCaller } from './functions';
+import { VertexAI } from './vertexai';
 
 const GenkitEnvSchema = z.object({
   GOOGLE_PROJECT_ID: z.string().min(1),
@@ -67,7 +67,7 @@ export class GenkitClient {
   private static instance: GenkitClient | null = null;
   private readonly config: Readonly<GenkitConfig>;
   private settings: Readonly<GenkitModelSettings>;
-  private readonly client: ReturnType<typeof google>;
+  private readonly client: VertexAI;
   private readonly embedder: EmbeddingService;
   private readonly cache: LRUCache<string, GenkitResponse>;
   private initialized = false;
@@ -79,11 +79,7 @@ export class GenkitClient {
     validateConfig(config);
     this.config = Object.freeze({ ...config });
     this.settings = Object.freeze({ ...defaultModelSettings, ...settings });
-    this.client = google({
-      projectId: this.config.projectId,
-      location: this.config.location,
-      credentials: this.config.credentials,
-    });
+    this.client = new VertexAI(this.config);
     this.embedder = new EmbeddingService(this.config, this.settings);
     this.cache = new LRUCache({
       max: this.config.cache?.maxSize || 100,
@@ -118,10 +114,8 @@ export class GenkitClient {
     // Validate environment
     const env = GenkitEnvSchema.parse(process.env);
 
-    // Initialize Google client
-    this.client = google({
-      projectId: env.GOOGLE_PROJECT_ID,
-      location: env.GOOGLE_LOCATION,
+    this.client = new VertexAI({
+      ...this.config,
       credentials: env.GOOGLE_APPLICATION_CREDENTIALS,
     });
 
@@ -172,9 +166,10 @@ export class GenkitClient {
 
     try {
       const response = await this.client.generate({
-        model: this.config.model,
+        model: this.config.defaultModel || this.config.model,
         prompt,
         ...defaultModelSettings,
+        ...this.settings,
         ...options,
       });
 
