@@ -11,7 +11,6 @@ import {
 import { EmbeddingService } from './embeddings';
 import { createStructuredPrompt, validateStructuredOutput } from './structured';
 import { functionCaller } from './functions';
-import { VertexAI } from './vertexai';
 
 const GenkitEnvSchema = z.object({
   GOOGLE_PROJECT_ID: z.string().min(1),
