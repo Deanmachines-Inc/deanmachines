@@ -1,4 +1,4 @@
-import { google, embedding } from '@genkit-ai/core';
+import { google } from '@genkit-ai/core';
 import type { GenkitConfig } from '~/lib/genkit/client';
 import { LRUCache } from 'lru-cache';
 
@@ -30,9 +30,5 @@ export class EmbeddingService {
     this.cache.set(cacheKey, response.embedding);
 
     return response.embedding;
-  }
-
-  async embedBatch(texts: string[]): Promise<Float32Array[]> {
-    return Promise.all(texts.map((text) => this.embed(text)));
   }
 }
