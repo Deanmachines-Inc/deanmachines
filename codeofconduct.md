@@ -1,7 +1,7 @@
 # Code of Conduct
 
 **Version: 1.0**
-**Last Updated: [Insert Date]**
+**Last Updated: [12-25-24]**
 
 ## Our Commitment
 
